@@ -48,7 +48,8 @@ namespace ConverVideo
                 int count = 0;
                 for (long i = 0; i < fs.Length; ++i)
                 {
-                    if (oldBuff == fs.ReadByte())
+                    byte currentBuf = Convert.ToByte(fs.ReadByte());
+                    if (oldBuff == currentBuf)
                     {
                         int j = 1;
                         while (j < 4)
@@ -64,10 +65,29 @@ namespace ConverVideo
                             count++;
                         }
                     }
+                    else if (newBuff[0] == currentBuf)
+                    {
+                        int j = 1;
+                        while (j < 4)
+                        {
+                            if (newBuff[j] != fs.ReadByte())
+                                break;
+                            j++;
+                        }
+                        if (j == 4)
+                        {
+                            MessageBox.Show("Don't need convert!");
+                            fs.Close();
+                            break;
+                        }
+                    }
                     if (count == 2)
+                    {
+                        fs.Close();
+                        MessageBox.Show("Convert Completed");
                         break;
+                    }
                 }
-                fs.Close();
             }
             else
                 MessageBox.Show("No File");
