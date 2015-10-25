@@ -48,6 +48,12 @@ namespace ConverVideo
                 int count = 0;
                 for (long i = 0; i < fs.Length; ++i)
                 {
+                    if (i > 1055)
+                    {
+                        fs.Close();
+                        MessageBox.Show("Can't detect file format");
+                        break;
+                    }
                     byte currentBuf = Convert.ToByte(fs.ReadByte());
                     if (oldBuff == currentBuf)
                     {
@@ -108,6 +114,12 @@ namespace ConverVideo
                 int count = 0;
                 for (long i = 0; i < fs.Length; ++i)
                 {
+                    if (i > 1055)
+                    {
+                        fs.Close();
+                        MessageBox.Show("Can't detect file format");
+                        break;
+                    }
                     byte currentBuf = Convert.ToByte(fs.ReadByte());
                     if (newBuff[0] == currentBuf)
                     {
